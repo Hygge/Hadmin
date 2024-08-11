@@ -1,0 +1,4 @@
+INSERT INTO public.sys_user_and_role (user_id,role_id) VALUES
+	 (1,575100325687685),
+	 (0,575166027358597),
+	 (577721277424005,577720630903173);

@@ -1,0 +1,82 @@
+-- public.sys_menu definition
+
+-- Drop table
+
+-- DROP TABLE public.sys_menu;
+
+CREATE TABLE public.sys_menu (
+	id int8 NOT NULL,
+	parent_id int8 NOT NULL,
+	title varchar(255) NOT NULL,
+	"type" int4 NOT NULL,
+	icon varchar(255) NOT NULL,
+	route varchar(255) NOT NULL,
+	keep_alive varchar(255) NOT NULL,
+	"key" varchar(255) NOT NULL,
+	"path" varchar(255) NOT NULL,
+	pem varchar(255) NOT NULL,
+	"enable" int4 NOT NULL,
+	"show" int4 NOT NULL,
+	target int4 NOT NULL,
+	query varchar(255) NOT NULL,
+	"order" int4 NOT NULL,
+	created_time timestamp NOT NULL,
+	CONSTRAINT sys_menu_pkey PRIMARY KEY (id)
+);
+
+-- public.sys_role definition
+
+-- Drop table
+
+-- DROP TABLE public.sys_role;
+
+CREATE TABLE public.sys_role (
+	id int8 NOT NULL,
+	role_name varchar(255) NOT NULL,
+	role_key varchar(255) NOT NULL,
+	disabled int4 NOT NULL,
+	created_by varchar(255) NOT NULL,
+	created_time timestamp NOT NULL,
+	remark varchar(255) NOT NULL,
+	CONSTRAINT sys_role_pkey PRIMARY KEY (id)
+);
+-- public.sys_role_and_menu definition
+
+-- Drop table
+
+-- DROP TABLE public.sys_role_and_menu;
+
+CREATE TABLE public.sys_role_and_menu (
+	menu_id int8 NOT NULL,
+	role_id int8 NOT NULL
+);
+
+-- public.sys_user definition
+
+-- Drop table
+
+-- DROP TABLE public.sys_user;
+
+CREATE TABLE public.sys_user (
+	id int8 NOT NULL,
+	user_name varchar(255) NOT NULL,
+	nick_name varchar(255) NOT NULL,
+	"password" varchar(255) NOT NULL,
+	phone_number varchar(255) NOT NULL,
+	remark varchar(255) NOT NULL,
+	disabled int4 NOT NULL,
+	created_by varchar(255) NOT NULL,
+	created_time timestamp NOT NULL,
+	CONSTRAINT sys_user_pkey PRIMARY KEY (id)
+);
+-- public.sys_user_and_role definition
+
+-- Drop table
+
+-- DROP TABLE public.sys_user_and_role;
+
+CREATE TABLE public.sys_user_and_role (
+	user_id int8 NOT NULL,
+	role_id int8 NOT NULL
+);
+
