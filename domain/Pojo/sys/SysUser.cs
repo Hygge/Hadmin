@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace domain.Pojo.sys
 {
+    /// <summary>
+    /// 系统用户
+    /// </summary>
     public class SysUser
     {
         /// <summary>

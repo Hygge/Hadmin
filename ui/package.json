@@ -1,0 +1,33 @@
+{
+  "name": "hadmin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.3.7",
+    "@ant-design/icons-vue": "^7.0.1",
+    "ant-design-vue": "4.x",
+    "antd": "^5.17.1",
+    "axios": "^1.7.2",
+    "dayjs": "^1.11.11",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
+    "pnpm": "^9.1.4",
+    "sass": "^1.77.2",
+    "screenfull": "^6.0.2",
+    "scss": "^0.2.4",
+    "unplugin-auto-import": "^0.17.6",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "unplugin-vue-components": "^0.27.0",
+    "vite": "^5.2.0"
+  }
+}

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace domain.Pojo.sys
 {
+    /// <summary>
+    /// 系统角色
+    /// </summary>
     public class SysRole
     {
         /// <summary>

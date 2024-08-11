@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace domain.Pojo.sys
 {
+    /// <summary>
+    /// 系统角色菜单关系
+    /// </summary>
     public class SysRoleAndMenu
     {
         public long menuId { set; get; }

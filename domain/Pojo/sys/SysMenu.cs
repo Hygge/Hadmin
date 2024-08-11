@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace domain.Pojo.sys
 {
+    /// <summary>
+    /// 系统菜单
+    /// </summary>
     public class SysMenu
     {
         /// <summary>
