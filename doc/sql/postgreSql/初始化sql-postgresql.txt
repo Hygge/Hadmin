@@ -80,3 +80,21 @@ CREATE TABLE public.sys_user_and_role (
 	role_id int8 NOT NULL
 );
 
+-- public.sys_log definition
+
+-- Drop table
+
+-- DROP TABLE public.sys_log;
+
+CREATE TABLE public.sys_log (
+	id int8 NOT NULL,
+	operation varchar(255) NOT NULL,
+	request_param varchar(255) NOT NULL,
+	response_param varchar(255) NOT NULL,
+	operator_name varchar(255) NOT NULL,
+	operate_time timestamp NOT NULL,
+	execute_time int8 NOT NULL,
+	execute_status bool NOT NULL,
+	reason varchar(255) NOT NULL,
+	"path" varchar(255) NOT NULL
+);

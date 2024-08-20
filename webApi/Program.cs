@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
+using quartzModeule;
 using webApi.Authorizations;
+using webApi.Middlewares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,6 +72,7 @@ builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, CustomizeAu
 
 #endregion
 
+//builder.Services.AddQuartzModule();
 
 var app = builder.Build();
 
@@ -89,18 +92,24 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseMiddleware<SysLogMiddleware>();
+app.UseEndpoints(e => e.MapControllers());
 
 // 初始化数据库表
-var db = app.Services.GetService<DbClientFactory>().GetSqlSugarClient();
+
+/*using var db = app.Services.GetService<DbClientFactory>().GetSqlSugarClient();
 var tables = db.DbMaintenance.GetTableInfoList(false);//true 走缓存 false不走缓存
 if (tables == null || tables.Count == 0 )
 {
     // 执行初始化sql
     db.CodeFirst.InitTables(typeof(SysUser), typeof(SysRole), typeof(SysRoleAndMenu), typeof(SysUserAndRole), typeof(SysMenu));
-
+    db.CodeFirst.InitTables<SysLog>();
+    
 }
+  
 TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-Console.WriteLine(Convert.ToInt64(ts.TotalSeconds).ToString());
+Console.WriteLine(Convert.ToInt64(ts.TotalSeconds).ToString());*/
+
 
 
 
