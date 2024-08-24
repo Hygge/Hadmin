@@ -13,7 +13,7 @@ namespace adminModule.Bll
 
         public List<SysMenuVo> GetList(int? status, string? title);
 
-        public List<SysMenuVo> GetTree(long id);
+        public List<SysMenuVo> GetTree(long id, string? title);
 
         public void AddMenu(SysMenuDto sysMenuDto);
 

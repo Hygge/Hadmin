@@ -46,7 +46,8 @@ public class SysLogMiddleware
             sysLog.path = context.Request.Path;
   
             await _next(context);
-           
+            
+          
             stream.Position = 0;
             await stream.CopyToAsync(origin);
 
@@ -63,6 +64,6 @@ public class SysLogMiddleware
         }
         long end = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         sysLog.executeTime = end - start;
-        sysLogBll.save(sysLog);
+        sysLogBll.Save(sysLog);
     }
 }

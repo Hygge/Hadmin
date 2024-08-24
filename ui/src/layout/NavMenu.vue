@@ -1,8 +1,14 @@
 <script setup>
 import { MehOutlined,MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
-import { watch, ref, h, reactive  } from 'vue';
+import { watch, ref, h, reactive, onUnmounted, onMounted } from 'vue';
 import {usePermissionStore, useTabStore} from "@/store/index.js";
 import {useRouter} from "vue-router";
+
+onMounted(() =>{
+  // 开启键盘监听事件
+  // window.addEventListener('keydown', search, true)
+
+})
 
 const permissionStore = usePermissionStore()
 const value = ref('');
@@ -48,8 +54,19 @@ const onRouter = item =>{
   })
 //   没有的路由属于外链
 
+}
+
+const search = (e) => {
+  if (e.keyCode == 13 || e.keyCode == 100) {
+
+  }
 
 }
+
+onUnmounted(() => {
+  //销毁事件
+  // window.removeEventListener('keydown', search, false)
+});
 </script>
 
 <template>

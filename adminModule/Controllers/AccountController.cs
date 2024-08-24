@@ -7,10 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using domain.Pojo.sys;
+using infrastructure.Attributes;
 
 namespace adminModule.Controllers
 {
@@ -30,21 +28,30 @@ namespace adminModule.Controllers
             this._jwtUtil = serviceProvider.GetRequiredService<JwtUtil>();
             this._httpContext = contextAccessor.HttpContext;
         }
-
+        
         [HttpPost]
         public ApiResult login(string userName, string password)
         {
+            SysLog sysLog = new();
             _logger.LogInformation($"登录账号：{userName},密码：{password}");
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             dictionary["accessToken"] = _jwtUtil.CreateToken(userName, sysUserBll.Login(userName, password));
             return ApiResult.succeed(dictionary);
         }
 
+       
         [Authorize]
         [HttpGet]
         public ApiResult info()
         {
             return ApiResult.succeed(sysUserBll.GetInfo(Convert.ToInt64(HttpContextUtil.getUserId(_httpContext))));
+        }
+
+        [SysLog("12333")]
+        [HttpGet]
+        public ApiResult get1()
+        {
+            return ApiResult.succeed();
         }
 
 

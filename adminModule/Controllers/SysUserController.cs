@@ -39,6 +39,7 @@ namespace adminModule.Controllers
         /// </summary>
         /// <param name="userDto"></param>
         /// <returns></returns>
+        [SysLog("添加用户")]
         [RequiredPermission("sys:user:add")]
         [HttpPost]
         public ApiResult add([FromBody] SysUserDto userDto)
@@ -71,6 +72,7 @@ namespace adminModule.Controllers
             return ApiResult.succeed(sysUserBll.GetList(dictionary));
         }
 
+        [SysLog("删除用户")]
         [RequiredPermission("sys:user:del")]
         [HttpDelete("{id}")]
         public ApiResult del([FromRoute] long id)
@@ -78,7 +80,7 @@ namespace adminModule.Controllers
             sysUserBll.Remove(id);
             return ApiResult.succeed();
         }
-
+        [SysLog("更新用户信息")]
         [RequiredPermission("sys:user:update")]
         [HttpPut("{id}")]
         public ApiResult update([FromRoute] long id, [FromBody] SysUserDto dto)
@@ -95,6 +97,7 @@ namespace adminModule.Controllers
         /// <param name="id"></param>
         /// <param name="password"></param>
         /// <returns></returns>
+        [SysLog("重置用户密码")]
         [RequiredPermission("sys:user:resetpassword")]
         [HttpPatch("{id}")]
         public ApiResult resetPassowrd([FromRoute] long id, string password)

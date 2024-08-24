@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SqlSugar;
 
 namespace domain.Pojo.sys
 {
@@ -14,6 +15,7 @@ namespace domain.Pojo.sys
         /// <summary>
         /// id
         /// </summary>
+        [SugarColumn(IsPrimaryKey = true)]
         public long id { get; set; } 
         /// <summary>
         /// 用户名称

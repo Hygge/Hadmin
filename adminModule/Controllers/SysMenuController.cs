@@ -36,9 +36,9 @@ namespace adminModule.Controllers
         }
 
         [HttpGet]
-        public ApiResult tree()
+        public ApiResult tree(string? title)
         {
-            return ApiResult.succeed(_sysMenuBll.GetTree(Convert.ToInt64(HttpContextUtil.getUserId(_httpContext))));
+            return ApiResult.succeed(_sysMenuBll.GetTree(Convert.ToInt64(HttpContextUtil.getUserId(_httpContext)), title));
         }
 
         [RequiredPermission("sys:menu:list")]
@@ -48,6 +48,7 @@ namespace adminModule.Controllers
             return ApiResult.succeed(_sysMenuBll.GetList(status, title));
         }
 
+        [SysLog("添加菜单")]
         [RequiredPermission("sys:menu:add")]
         [HttpPost]
         public ApiResult addMenu([FromBody] SysMenuDto dto)
@@ -56,6 +57,7 @@ namespace adminModule.Controllers
             return ApiResult.succeed();
         }
         
+        [SysLog("修改菜单")]
         [RequiredPermission("sys:menu:update")]
         [HttpPut]
         public ApiResult modify([FromBody] SysMenuDto dto)
@@ -63,6 +65,8 @@ namespace adminModule.Controllers
             _sysMenuBll.UpdateMenu(dto);
             return ApiResult.succeed();
         }
+        
+        [SysLog("删除菜单")]
         [RequiredPermission("sys:menu:del")]
         [HttpDelete("{menuId}")]
         public ApiResult delMenu([FromRoute] long menuId)

@@ -38,7 +38,7 @@ namespace adminModule.Controllers
 
             return ApiResult.succeed(_sysRoleBll.List(roleName, key, status, start, end));
         }
-        
+        [SysLog("添加角色")]
         [RequiredPermission("sys:role:add")]
         [HttpPost]
         public ApiResult add(string roleName, string key, int? status, string? remark)
@@ -46,7 +46,7 @@ namespace adminModule.Controllers
             _sysRoleBll.Add(roleName, key, remark, status, HttpContextUtil.getUserName(HttpContext));
             return ApiResult.succeed();
         }
-
+        [SysLog("删除角色")]
         [RequiredPermission("sys:role:del")]
         [HttpDelete("{id}")]
         public ApiResult del(long id)
@@ -54,7 +54,7 @@ namespace adminModule.Controllers
             _sysRoleBll.Delete(id);
             return ApiResult.succeed();
         }
-
+        [SysLog("修改角色信息")]
         [RequiredPermission("sys:role:update")]
         [HttpPut]
         public ApiResult put(SysRole sysRole)
@@ -63,7 +63,7 @@ namespace adminModule.Controllers
             _sysRoleBll.Update(sysRole);
             return ApiResult.succeed();
         }
-
+        [SysLog("修改角色菜单权限")]
         [RequiredPermission("sys:role:menu")]
         [HttpPost]
         public ApiResult addPermissons([FromBody]RoleBindMenu roleBindMenu)
@@ -72,7 +72,7 @@ namespace adminModule.Controllers
             _sysRoleBll.AddPermissons(roleBindMenu.roleId, roleBindMenu.menuIds);
             return ApiResult.succeed();
         }
-
+        [SysLog("修改角色绑定用户")]
         [RequiredPermission("sys:role:user")]
         [HttpPost]
         public ApiResult addBindUserRole([FromBody] RoleBindUser roleBindUser)

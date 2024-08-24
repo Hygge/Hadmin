@@ -65,6 +65,7 @@ namespace infrastructure.Utils
             {
                 StreamReader stream = new StreamReader(context.Request.Body);
                 string body = await stream.ReadToEndAsync();
+                context.Request.Body.Position = 0;
                 if (!string.IsNullOrEmpty(body))
                 {
                     dictionary.Add("body", body);

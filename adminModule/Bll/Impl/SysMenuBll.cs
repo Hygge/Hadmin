@@ -67,7 +67,7 @@ namespace adminModule.Bll.Impl
             return list;
         }
 
-        public List<SysMenuVo> GetTree(long id)
+        public List<SysMenuVo> GetTree(long id, string? title)
         {
             using var db = dbClientFactory.GetSqlSugarClient();
 
@@ -78,28 +78,32 @@ namespace adminModule.Bll.Impl
             }
 
             var query = db.Queryable<SysUserAndRole>().Where(ur => ur.userId == id)
-                    .LeftJoin<SysRole>((ur, r) => r.id == ur.roleId).Where((ur, r) => r.disabled == (int)DisabledEnum.ZERO)
-                    .LeftJoin<SysRoleAndMenu>((ur, r, rm) => rm.roleId == r.id)
-                    .LeftJoin<SysMenu>((ur, r, rm, m1) => m1.id == rm.menuId)
-                    .Distinct()
-                    .Select((ur, r, rm, m1) => new SysMenuVo()
-                    {
-                        id = m1.id,
-                        title = m1.title,
-                        enable = m1.enable,
-                        icon = m1.icon,
-                        parentId = m1.parentId,
-                        pem = m1.pem,
-                        route = m1.route,
-                        type = m1.type,
-                        path = m1.path,
-                        keepAlive = m1.keepAlive,
-                        key = m1.id,
-                        show = m1.show,
-                        target = m1.target,
-                        order = m1.order
-                    });
-            List<SysMenuVo> sysMenus = query.ToList();
+                .LeftJoin<SysRole>((ur, r) => r.id == ur.roleId).Where((ur, r) => r.disabled == (int)DisabledEnum.ZERO)
+                .LeftJoin<SysRoleAndMenu>((ur, r, rm) => rm.roleId == r.id)
+                .LeftJoin<SysMenu>((ur, r, rm, m1) => m1.id == rm.menuId)
+               ;
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where((ur, r, rm, m1) => m1.title.Contains(title));
+            }
+            List<SysMenuVo> sysMenus = query.Distinct()
+                .Select((ur, r, rm, m1) => new SysMenuVo()
+                {
+                    id = m1.id,
+                    title = m1.title,
+                    enable = m1.enable,
+                    icon = m1.icon,
+                    parentId = m1.parentId,
+                    pem = m1.pem,
+                    route = m1.route,
+                    type = m1.type,
+                    path = m1.path,
+                    keepAlive = m1.keepAlive,
+                    key = m1.id,
+                    show = m1.show,
+                    target = m1.target,
+                    order = m1.order
+                }).ToList();    
             // 生成树形菜单返回
             List<SysMenuVo> list = new List<SysMenuVo>();
             BuildTree(sysMenus, list);
@@ -171,7 +175,7 @@ namespace adminModule.Bll.Impl
                 throw new BusinessException(424, "未知菜单修改失败");
             }
 
-            var res = db.Updateable<SysMenu>(menu)
+            var res = db.Updateable<SysMenu>()
                 .SetColumns(x => x.title, sysMenuDto.title)
                 .SetColumns(x => x.parentId, sysMenuDto.parentId)
                 .SetColumns(x => x.route, sysMenuDto.route)
@@ -183,7 +187,7 @@ namespace adminModule.Bll.Impl
                 .SetColumns(x => x.icon, sysMenuDto.icon)
                 .SetColumns(x => x.enable, sysMenuDto.enable)
                 .SetColumns(x => x.pem, sysMenuDto.pem)
-                .SetColumns(x => x.order, sysMenuDto.order).ExecuteCommand();
+                .SetColumns(x => x.order, sysMenuDto.order).Where( x => x.id == menu.id).ExecuteCommand();
 
         }
 
