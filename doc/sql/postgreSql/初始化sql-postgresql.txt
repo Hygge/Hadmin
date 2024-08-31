@@ -98,3 +98,45 @@ CREATE TABLE public.sys_log (
 	reason varchar(255) NOT NULL,
 	"path" varchar(255) NOT NULL
 );
+
+-- public.job_log definition
+
+-- Drop table
+
+-- DROP TABLE public.job_log;
+
+CREATE TABLE public.job_log (
+	id int8 NOT NULL,
+	job_name varchar(100) NOT NULL,
+	category varchar(100) NOT NULL,
+	type_name varchar(255) NOT NULL,
+	job_message text NOT NULL,
+	exception_info text NOT NULL,
+	status bool NOT NULL,
+	start_time timestamp NOT NULL,
+	stop_time timestamp NOT NULL,
+	CONSTRAINT job_log_pkey PRIMARY KEY (id)
+);
+
+-- public.job_info definition
+
+-- Drop table
+
+-- DROP TABLE public.job_info;
+
+CREATE TABLE public.job_info (
+	id int8 NOT NULL,
+	job_name varchar(100) NOT NULL,
+	category varchar(100) NOT NULL,
+	assembly_name varchar(255) NOT NULL,
+	type_name varchar(255) NOT NULL,
+	job_key varchar(100) NOT NULL,
+	job_group varchar(100) NOT NULL,
+	cron_expression varchar(20) NOT NULL,
+	misfire_policy int4 NOT NULL,
+	concurrent bool NOT NULL,
+	status int4 NOT NULL,
+	seconds int4 NOT NULL,
+	repeat int4 NOT NULL,
+	CONSTRAINT job_info_pkey PRIMARY KEY (id)
+);

@@ -12,7 +12,7 @@ defineOptions({
 
 onMounted(() => {
 
-  search();
+  search(null);
 
 })
 
@@ -28,7 +28,6 @@ const reset = () => {
   path.value = ''
 }
 const search = (page) =>{
-  console.log(paginationer)
   let query = {path:path.value, operation: operation.value, operatorName: operatorName.value,
     pageNum: paginationer.current, pageSize: paginationer.pageSize }
   if (page){
@@ -40,7 +39,6 @@ const search = (page) =>{
     query.startTime = dayjs(operateTime.value[0]).format('YYYY-MM-DD')
     query.endTime = dayjs(operateTime.value[1]).format('YYYY-MM-DD')
   }
-  console.log(query)
   list(query)
 }
 
@@ -140,7 +138,7 @@ const handlePageChange = (page, pageSize) => {
       </a-flex>
 
       <a-flex gap="large">
-        <a-button type="primary" @click="search" block> <SearchOutlined />查询</a-button>
+        <a-button type="primary" @click="search('')" block> <SearchOutlined />查询</a-button>
         <a-button block @click="reset"> <RedoOutlined />重置</a-button>
       </a-flex>
 

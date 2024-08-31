@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Quartz.AspNetCore" Version="3.13.0" />
+      <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.13.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\infrastructure\infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

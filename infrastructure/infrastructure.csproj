@@ -16,6 +16,7 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 		<PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
@@ -24,6 +25,13 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\domain\domain.csproj" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <None Update="log4Net.config">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 	
 </Project>

@@ -5,6 +5,7 @@ using domain.Pojo.sys;
 using domain.Result;
 using infrastructure.Attributes;
 using infrastructure.Utils;
+using Newtonsoft.Json;
 using Yitter.IdGenerator;
 
 namespace webApi.Middlewares;
@@ -56,6 +57,11 @@ public class SysLogMiddleware
                 sysLog.executeStatus = false;
             }
             sysLog.responseParam = Encoding.UTF8.GetString(stream.ToArray());
+            ApiResult apiResult = JsonConvert.DeserializeObject<ApiResult>(sysLog.responseParam);
+            if (HttpCode.SUCCESS_CODE != apiResult.code)
+            {
+                sysLog.executeStatus = false;
+            }
         }
         catch (Exception e)
         {

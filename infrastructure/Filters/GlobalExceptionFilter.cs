@@ -12,7 +12,7 @@ using domain.Result;
 
 namespace infrastructure.Filters
 {
-    public class GlobalExceptionFilter : IAsyncExceptionFilter
+    public class GlobalExceptionFilter : IAsyncExceptionFilter, IExceptionFilter
     {
         private readonly ILogger<GlobalExceptionFilter> _logger;
 
@@ -43,5 +43,20 @@ namespace infrastructure.Filters
             return Task.CompletedTask;
         }
 
+        public void OnException(ExceptionContext context)
+        {
+            switch (context.Exception)
+            {
+                case BusinessException:
+                    var h = context.Exception as BusinessException;
+                    context.Result = new ObjectResult(ApiResult.failed(h.code, h.message));
+                    _logger.LogError(h.message);
+                    break;
+                default:
+                    context.Result = new ObjectResult(ApiResult.failed(500, context.Exception.Message));
+                    _logger.LogError(context.Exception.Message);
+                    break;
+            }
+        }
     }
 }

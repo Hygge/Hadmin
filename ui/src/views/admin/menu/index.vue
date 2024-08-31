@@ -106,7 +106,6 @@ const confirm = (id) => {
   })
 };
 const cancel = e => {
-  console.log(e);
   message.info('取消操作');
 };
 
@@ -129,7 +128,6 @@ const addOrUpdate = (item, str) => {
     type.value = item.type
     currentMenu.value = item
   }
-  console.log(currentMenu)
   pop.value = true;
 }
 
@@ -147,7 +145,6 @@ const dir = ref(false)
 const menu = ref(false)
 const btn = ref(false)
 watch(type, () => {
-  console.log(type.value)
   if (type.value === 1){
     dir.value = true
     menu.value = false
@@ -164,7 +161,6 @@ watch(type, () => {
     dir.value = false
   }
   currentMenu.value.type = type.value
-  console.log(currentMenu.value.icon)
 });
 watch(value, () => {
   console.log(value.value)
@@ -178,7 +174,7 @@ const saveMenu = () =>{
   data.icon = currentMenu.value.icon || ''
   data.order = currentMenu.value.order || undefined
   data.pem = currentMenu.value.pem
-  data.show = currentMenu.value.show  || 1
+  data.show = currentMenu.value.show  || 0
   data.target = currentMenu.value.target  || 0
   data.enable = currentMenu.value.enable
   data.type = type.value

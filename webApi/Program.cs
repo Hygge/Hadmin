@@ -8,7 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
+using domain.Pojo.quartz;
+using infrastructure.Utils;
 using quartzModeule;
+using quartzModeule.Bll;
 using webApi.Authorizations;
 using webApi.Middlewares;
 
@@ -72,7 +75,7 @@ builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, CustomizeAu
 
 #endregion
 
-//builder.Services.AddQuartzModule();
+builder.Services.AddQuartzModule();
 
 var app = builder.Build();
 
@@ -95,6 +98,9 @@ app.MapControllers();
 app.UseMiddleware<SysLogMiddleware>();
 app.UseEndpoints(e => e.MapControllers());
 
+
+app.UseServiceProvider();
+
 // 初始化数据库表
 
 /*using var db = app.Services.GetService<DbClientFactory>().GetSqlSugarClient();
@@ -103,14 +109,16 @@ if (tables == null || tables.Count == 0 )
 {
     // 执行初始化sql
     db.CodeFirst.InitTables(typeof(SysUser), typeof(SysRole), typeof(SysRoleAndMenu), typeof(SysUserAndRole), typeof(SysMenu));
-    db.CodeFirst.InitTables<SysLog>();
+    db.CodeFirst.InitTables<SysLog>();  db.CodeFirst.InitTables<JobInfo>();
+  db.CodeFirst.InitTables<JobLog>();    
     
 }
-  
+
 TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
 Console.WriteLine(Convert.ToInt64(ts.TotalSeconds).ToString());*/
 
 
+app.Services.GetService<IJobInfoBll>().InitJobs();
 
 
 app.Run();
