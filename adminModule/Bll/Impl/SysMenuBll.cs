@@ -191,7 +191,7 @@ namespace adminModule.Bll.Impl
 
         }
 
-        public void Remove(long id)
+        public void Delete(long id)
         {
             using var db = dbClientFactory.GetSqlSugarClient();
             db.Deleteable<SysMenu>().Where(x => x.id == id).ExecuteCommand();

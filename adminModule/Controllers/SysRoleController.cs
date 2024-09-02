@@ -36,7 +36,7 @@ namespace adminModule.Controllers
         public ApiResult list(string? roleName, string? key, int? status, DateTime? start, DateTime? end)
         {
 
-            return ApiResult.succeed(_sysRoleBll.List(roleName, key, status, start, end));
+            return ApiResult.succeed(_sysRoleBll.GetList(roleName, key, status, start, end));
         }
         [SysLog("添加角色")]
         [RequiredPermission("sys:role:add")]

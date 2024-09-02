@@ -25,7 +25,7 @@ public class SysLogBll : ISysLogBll
         db.Insertable(log).ExecuteCommand();
     }
 
-    public Pager<SysLog> FindLog(string? path, string? operation, string? operatorName, DateTime? startTime, DateTime? endTime,
+    public Pager<SysLog> GetList(string? path, string? operation, string? operatorName, DateTime? startTime, DateTime? endTime,
         int pageNum, int pageSize)
     {
         Pager<SysLog> pager = new(pageNum, pageSize);
@@ -45,7 +45,7 @@ public class SysLogBll : ISysLogBll
         return pager;
     }
 
-    public void Remove(List<long> ids)
+    public void Delete(List<long> ids)
     {
         if (ids.Count == 0)
         {

@@ -21,7 +21,7 @@ public interface IJobInfoBll
     /// 修改计划
     /// </summary>
     /// <param name="jobInfo"></param>
-    Task Modify(JobInfo jobInfo);
+    Task Update(JobInfo jobInfo);
 
     /// <summary>
     /// 执行计划
@@ -33,7 +33,7 @@ public interface IJobInfoBll
     /// 删除计划
     /// </summary>
     /// <param name="id"></param>
-    Task Remove(long id);
+    Task Delete(List<long> ids);
 
     /// <summary>
     /// 暂停计划
@@ -50,7 +50,7 @@ public interface IJobInfoBll
     /// <param name="pageNum"></param>
     /// <param name="pageSize"></param>
     /// <returns></returns>
-    Task<Pager<JobInfo>> FindJob(string? jobName, string? category, int? status, int pageNum = 1, int pageSize = 10);
+    Task<Pager<JobInfo>> GetList(string? jobName, string? category, int? status, int pageNum = 1, int pageSize = 10);
 
 
 }

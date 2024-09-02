@@ -19,7 +19,7 @@ namespace adminModule.Bll
 
         public void UpdateMenu(SysMenuDto sysMenuDto);
 
-        public void Remove(long id);
+        public void Delete(long id);
 
 
 

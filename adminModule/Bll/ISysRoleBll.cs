@@ -10,7 +10,7 @@ namespace adminModule.Bll
     public interface ISysRoleBll
     {
 
-        public List<SysRole> List(string? roleName, string? key, int? status, DateTime? start, DateTime? end);
+        public List<SysRole> GetList(string? roleName, string? key, int? status, DateTime? start, DateTime? end);
 
         public void Add(string name, string key, string remark, int? status, string createBy);
 

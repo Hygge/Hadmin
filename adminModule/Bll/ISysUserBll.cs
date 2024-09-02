@@ -38,20 +38,20 @@ namespace adminModule.Bll
         /// 删除用户
         /// </summary>
         /// <param name="id"></param>
-        public void Remove(long id);
+        public void Delete(long id);
 
         /// <summary>
         /// 修改用户信息
         /// </summary>
         /// <param name="sysUserDto"></param>
-        public void Modify(SysUserDto sysUserDto);
+        public void Update(SysUserDto sysUserDto);
 
         /// <summary>
         /// 修改用户密码
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="password"></param>
-        public void ModifyPassword(long userId, string? password, string newPassword);
+        public void UpdatePassword(long userId, string? password, string newPassword);
 
         public UserInfo GetInfo(long id);
     }

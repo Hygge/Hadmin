@@ -25,7 +25,7 @@ namespace adminModule.Bll.Impl
         }
 
 
-        public List<SysRole> List(string? roleName, string? key, int? status, DateTime? start, DateTime? end)
+        public List<SysRole> GetList(string? roleName, string? key, int? status, DateTime? start, DateTime? end)
         {
             var exp = Expressionable.Create<SysRole>();
             exp.OrIF(!string.IsNullOrEmpty(roleName), it => it.roleName.Equals(roleName));

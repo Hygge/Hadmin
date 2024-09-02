@@ -77,7 +77,7 @@ namespace adminModule.Controllers
         [HttpDelete("{id}")]
         public ApiResult del([FromRoute] long id)
         {
-            sysUserBll.Remove(id);
+            sysUserBll.Delete(id);
             return ApiResult.succeed();
         }
         [SysLog("更新用户信息")]
@@ -87,7 +87,7 @@ namespace adminModule.Controllers
         {
 
             _logger.LogInformation(JsonConvert.SerializeObject(dto) + " \t" + id);
-            sysUserBll.Modify(dto);
+            sysUserBll.Update(dto);
             return ApiResult.succeed();
         }
 
@@ -102,7 +102,7 @@ namespace adminModule.Controllers
         [HttpPatch("{id}")]
         public ApiResult resetPassowrd([FromRoute] long id, string password)
         {
-            sysUserBll.ModifyPassword(id, null, password);
+            sysUserBll.UpdatePassword(id, null, password);
             return ApiResult.succeed();
         }
 

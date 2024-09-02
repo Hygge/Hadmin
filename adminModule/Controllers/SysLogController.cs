@@ -25,7 +25,7 @@ public class SysLogController : ControllerBase
     public ApiResult list(string? path, string? operation, string? operatorName,  
         DateTime? startTime, DateTime? endTime, int pageNum , int pageSize)
     {
-        return ApiResult.succeed(_logBll.FindLog(path, operation, operatorName, startTime, endTime, pageNum, pageSize ));
+        return ApiResult.succeed(_logBll.GetList(path, operation, operatorName, startTime, endTime, pageNum, pageSize ));
     }
 
     [SysLog("删除操作日志")]
@@ -33,7 +33,7 @@ public class SysLogController : ControllerBase
     [HttpDelete]
     public ApiResult del([FromBody]List<long> ids)
     {
-        _logBll.Remove(ids);
+        _logBll.Delete(ids);
         return ApiResult.succeed();
     }
     

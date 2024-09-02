@@ -44,16 +44,16 @@ public class QuartzController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ApiResult> delJob(long id)
+    public async Task<ApiResult> delJob(List<long> ids)
     {
-        await _jobInfoBll.Remove(id);
+        await _jobInfoBll.Delete(ids);
         return ApiResult.succeed();
     }
 
     [HttpPost]
     public async Task<ApiResult> list(string? jobName, string? category, int? status, int pageNum , int pageSize )
     {
-        Pager<JobInfo> pager = await _jobInfoBll.FindJob(jobName, category, status, pageNum, pageSize);
+        Pager<JobInfo> pager = await _jobInfoBll.GetList(jobName, category, status, pageNum, pageSize);
         return ApiResult.succeed(pager);
     }
 

@@ -1,9 +1,8 @@
 <script setup>
 import {SearchOutlined, RedoOutlined, DeleteOutlined, FormOutlined, CaretRightOutlined, SlidersOutlined} from '@ant-design/icons-vue';
-import locale from "ant-design-vue/es/date-picker/locale/zh_CN.js";
-import {reactive, ref, onMounted, } from 'vue';
+import {reactive, ref, onMounted, toRaw,  } from 'vue';
 import {message} from "ant-design-vue";
-import {FindQuartz} from "@/api/quartz.js";
+import {AddJob, DelJob, GetList, StatusJob} from "@/api/quartz.js";
 import {useRouter} from "vue-router";
 
 
@@ -13,13 +12,30 @@ defineOptions({
 
 onMounted(() => {
 
-  search()
+  search(null)
 
 })
 
-const search = () => {
-  let form = {jobName: '', category: '', status: undefined, pageNum: 1, pageSize: 10  };
-  FindQuartz(form).then(res => {
+const query = reactive({
+  jobName:'',
+  category: '',
+  status: undefined,
+})
+const reset = ()=>{
+  query.jobName = '';
+  query.category = '';
+  query.category = '';
+  query.status = undefined;
+}
+
+const search = (page) => {
+  let form = {jobName: query.jobName, category: query.category, status: query.status, pageNum: paginationer.current,
+    pageSize: paginationer.pageSize  };
+  if (page !== null){
+    form.pageSize = page.pageSize;
+    form.pageNum = page.current;
+  }
+  GetList(form).then(res => {
     if (res.code === 200){
       let result = res.data
       dataSource.value = result.rows
@@ -31,9 +47,6 @@ const search = () => {
 
 }
 
-const reset = () => {
-
-}
 const route = useRouter()
 const logTarget = ()=>{
   route.push('/quartz/log')
@@ -52,7 +65,6 @@ const columns= [
   {    title: '状态',    dataIndex: 'status',    key: 'status',    align: 'center'  },
   {    title: '执行周期',    dataIndex: 'second',    key: 'second',    align: 'center'  },
   {    title: '执行次数',    dataIndex: 'repeat',    key: 'repeat',    align: 'center'  },
-  {    title: '操作',      key: 'operation',    dataIndex: 'operation',  align: 'center'  },
 ]
 
 const  paginationer = reactive({
@@ -81,8 +93,111 @@ const rowSelection = {
 };
 
 const handlePageChange = (page, pageSize) => {
-  console.log(page)
+  search(page)
 }
+
+const job = reactive({
+  jobName:'',
+  category: '',
+  assemblyName: '',
+  typeName: '',
+  jobKey: '',
+  jobGroup: '',
+  cronExpression: '',
+  status: 1,
+  concurrent: false,
+  seconds: 0,
+  repeat: -1,
+  id: -1,
+})
+const resetJob = () => {
+  job.jobName = ''
+  job.category = ''
+  job.assemblyName = ''
+  job.typeName = ''
+  job.jobKey = ''
+  job.jobGroup = ''
+  job.cronExpression = ''
+  job.status = 1
+  job.concurrent = false
+  job.seconds = 0
+  job.repeat = -1
+  job.id = -1
+}
+// 删除计划
+const delJob = () => {
+  if (selectRow.value.length === 0){
+    return;
+  }
+  let data = selectRow.value.map( item => item.id);
+  DelJob(data).then(res => {
+    if (res.code === 200){
+      message.success("删除成功")
+    }else {
+      message.error(res.msg)
+    }
+  })
+
+}
+// 暂停或继续计划
+const puseJob = (state) => {
+
+  if (selectRow.value.length === 0){
+    return;
+  }
+  selectRow.value.forEach(item => {
+    let data = {id: item.id, status:  state}
+    StatusJob(data).then(res => {
+      if (res.code === 200){
+        message.success("操作成功")
+      }else {
+        message.error(res.msg)
+      }
+    })
+  })
+
+}
+// 新增
+const addJob = () => {
+  open.value = true
+}
+// 编辑
+const updateJob = () => {
+  open.value = true
+}
+
+
+const open = ref(false);
+const showDrawer = () => {
+  open.value = true;
+};
+const onClose = () => {
+  open.value = false;
+};
+
+const saveJob = () => {
+
+  let data = toRaw(job)
+  data.concurrent = Boolean(job.concurrent)
+  data.status = Number  (job.status)
+  AddJob(toRaw(job)).then(res => {
+    if (res.code === 200){
+      message.success("保存成功")
+      resetJob()
+      onClose()
+      search(null)
+    }
+    else {
+      message.error(res.msg)
+    }
+  })
+
+}
+const optionsWithDisabled = [
+  { label: '正常', value: 0 },
+  { label: '暂停', value: 1 },
+];
+
 </script>
 
 <template>
@@ -90,20 +205,19 @@ const handlePageChange = (page, pageSize) => {
     <a-flex :gap="50">
       <a-flex gap="middle">
         <label class="from-label">计划名称</label>
-        <a-input v-model:value="path" placeholder="请输入计划名称" />
+        <a-input v-model:value="query.jobName" placeholder="请输入计划名称" />
       </a-flex>
 
       <a-flex gap="middle">
         <label class="from-label">计划分类</label>
-        <a-input v-model:value="operation" placeholder="请输入计划分类" />
+        <a-input v-model:value="query.category" placeholder="请输入计划分类" />
       </a-flex>
       <a-flex gap="middle">
         <label class="from-label">计划状态</label>
         <a-select
             ref="select"
             style="width: 120px"
-            @change="handleChange"
-            v-model:value="disabled"
+            v-model:value="query.status"
         >
           <a-select-option value="0">正常</a-select-option>
           <a-select-option value="1">暂停</a-select-option>
@@ -111,9 +225,8 @@ const handlePageChange = (page, pageSize) => {
 
       </a-flex>
 
-
       <a-flex gap="large">
-        <a-button type="primary" @click="search('')" block> <SearchOutlined />查询</a-button>
+        <a-button type="primary" @click="search(null)" block> <SearchOutlined />查询</a-button>
         <a-button block @click="reset"> <RedoOutlined />重置</a-button>
       </a-flex>
 
@@ -124,11 +237,11 @@ const handlePageChange = (page, pageSize) => {
 
   <a-card style="margin-top: 10px;">
 
-    <a-button type="primary"   style="margin: 10px;">
+    <a-button  @click="addJob"   style="margin: 10px;background-color: #2ecc71;color: white;">
       <FormOutlined />
       新增
     </a-button>
-    <a-button   style="margin: 10px;background-color: #f1c40f;color: white;">
+    <a-button @click="updateJob"  style="margin: 10px;background-color: #f1c40f;color: white;">
       <FormOutlined />
       编辑
     </a-button>
@@ -136,18 +249,18 @@ const handlePageChange = (page, pageSize) => {
         title="是否确定删除？"
         ok-text="Yes"
         cancel-text="No"
-        @confirm="delLog"
+        @confirm="delJob"
     >
     <a-button type="primary" danger  style="margin: 10px;">
       <DeleteOutlined />
       删除
     </a-button>
     </a-popconfirm>
-    <a-button type="primary"   style="margin: 10px;">
+    <a-button type="primary"  @click="puseJob(1)" style="margin: 10px;">
       <CaretRightOutlined />
       暂停
     </a-button>
-    <a-button type="primary"   style="margin: 10px;">
+    <a-button type="primary"  @click="puseJob(0)" style="margin: 10px;">
       <CaretRightOutlined />
       继续
     </a-button>
@@ -175,20 +288,97 @@ const handlePageChange = (page, pageSize) => {
           <a-tag v-else color="#f50">否</a-tag>
         </template>
 
-        <template v-else-if="column.key === 'operation'">
-          <a-button v-if="record.status === 0" type="primary" >暂停</a-button>
-          <a-button v-else type="primary" >继续</a-button>
-        </template>
       </template>
 
     </a-table>
 
   </a-card>
+
+
+
+  <a-drawer
+      title="新增计划"
+      placement="right"
+      :closable="false"
+      :open="open"
+      @close="onClose"
+      width="500"
+  >
+    <a-flex  vertical :gap="50">
+
+      <a-flex gap="middle">
+        <label class="from-label" >计划名称</label>
+        <a-input class="label-right" v-model:value="job.jobName" placeholder="请输入计划名称" />
+      </a-flex>
+      <a-flex gap="middle">
+        <label class="from-label">计划类别</label>
+        <a-input class="label-right" v-model:value="job.category" placeholder="请输入计划类别" />
+      </a-flex>
+      <a-flex gap="middle">
+        <label class="from-label">jobKey&nbsp;&nbsp;&nbsp;</label>
+        <a-input class="label-right" v-model:value="job.jobKey" placeholder="请输入计划jobKey" />
+      </a-flex>
+      <a-flex gap="middle">
+        <label class="from-label">jobGroup</label>
+        <a-input class="label-right" v-model:value="job.jobGroup" placeholder="请输入计划jobGroup" />
+      </a-flex>
+
+      <a-flex gap="middle">
+        <label class="from-label">程序集名</label>
+        <a-input class="label-right" v-model:value="job.assemblyName" placeholder="请输入计划程序集名" />
+      </a-flex>
+      <a-flex gap="middle">
+        <label class="from-label">计划内容全类名</label>
+        <a-input style="width: 250px;margin-left: 20px;" v-model:value="job.typeName" placeholder="请输入计划类名" />
+      </a-flex>
+      <a-flex gap="middle">
+        <label class="from-label">cron 表达式</label>
+        <a-input  style="margin-left: 40px;width: 250px;" v-model:value="job.cronExpression" placeholder="请输入计划cron表达式" />
+      </a-flex>
+      <a-flex gap="middle">
+        <label class="from-label">cron并发执行</label>
+        <a-select
+            ref="select"
+            style="margin-left: 30px;width: 250px;"
+            v-model:value="job.concurrent"
+            class="label-right"
+        >
+          <a-select-option value="true">并发</a-select-option>
+          <a-select-option value="false">串行</a-select-option>
+        </a-select>
+      </a-flex>
+      <a-flex gap="middle">
+        <label class="from-label">计划状态</label>
+        <a-radio-group   class="label-right" v-model:value="job.status" :options="optionsWithDisabled" optionType="button"
+                         button-style="solid" >
+<!--          <a-radio-button value="0">正常</a-radio-button>
+          <a-radio-button value="1">暂停</a-radio-button>-->
+        </a-radio-group>
+      </a-flex>
+
+      <a-flex vertical>
+        <a-button type="primary"  @click="saveJob"   style="margin-top: 30px;">
+          保存
+        </a-button>
+        <a-button    @click="resetJob"   style="margin-top: 20px;">
+          重置
+        </a-button>
+      </a-flex>
+
+    </a-flex>
+
+
+  </a-drawer>
+
 </template>
 
 <style scoped>
 .ant-input {
   width: 200px;
+}
+.label-right {
+  margin-left: 60px;
+  width: 250px;
 }
 
 

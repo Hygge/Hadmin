@@ -46,7 +46,7 @@ public class JobInfoBll : IJobInfoBll
         }
     }
 
-    public async Task Modify(JobInfo jobInfo)
+    public async Task Update(JobInfo jobInfo)
     {
         using var db = _dbClientFactory.GetSqlSugarClient();
         JobInfo jobInfo1 = db.Queryable<JobInfo>().Where(x => x.id == jobInfo.id).Single();
@@ -94,18 +94,21 @@ public class JobInfoBll : IJobInfoBll
         }
     }
 
-    public async Task Remove(long id)
+    public async Task Delete(List<long> ids)
     {
         using var db = _dbClientFactory.GetSqlSugarClient();
-        JobInfo jobInfo = db.Queryable<JobInfo>().Single(x => x.id == id);
-        if (jobInfo == null)
+        foreach (var id in ids)
         {
-            return;
-        }
-        int ret = db.Deleteable(jobInfo).ExecuteCommand();
-        if (ret == 1)
-        {
-            await DeleteJob(jobInfo);  
+            JobInfo jobInfo = db.Queryable<JobInfo>().Single(x => x.id == id);
+            if (jobInfo == null)
+            {
+                continue;
+            }
+            int ret = db.Deleteable(jobInfo).ExecuteCommand();
+            if (ret == 1)
+            {
+                await DeleteJob(jobInfo);  
+            } 
         }
     }
 
@@ -125,7 +128,7 @@ public class JobInfoBll : IJobInfoBll
         }
     }
 
-    public async Task<Pager<JobInfo>> FindJob(string? jobName, string? category, int? status, int pageNum = 1, int pageSize = 10)
+    public async Task<Pager<JobInfo>> GetList(string? jobName, string? category, int? status, int pageNum = 1, int pageSize = 10)
     {
         Pager<JobInfo> pager = new Pager<JobInfo>(pageNum, pageSize);
         var expr = Expressionable.Create<JobInfo>();

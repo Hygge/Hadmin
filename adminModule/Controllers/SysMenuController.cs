@@ -71,7 +71,7 @@ namespace adminModule.Controllers
         [HttpDelete("{menuId}")]
         public ApiResult delMenu([FromRoute] long menuId)
         {
-            _sysMenuBll.Remove(menuId);
+            _sysMenuBll.Delete(menuId);
             return ApiResult.succeed();
         }
 

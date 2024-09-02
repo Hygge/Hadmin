@@ -130,14 +130,14 @@ namespace adminModule.Bll.Impl
             return pager;
         }
 
-        public void Remove(long id)
+        public void Delete(long id)
         {
             using var db = dbClientFactory.GetSqlSugarClient();
             db.Deleteable<SysUser>(x => x.id == id).ExecuteCommand();
         }
 
 
-        public void Modify(SysUserDto sysUserDto)
+        public void Update(SysUserDto sysUserDto)
         {
             using var db = dbClientFactory.GetSqlSugarClient();
             SysUser? sysUser = db.Queryable<SysUser>().Where(u => u.id == sysUserDto.id).Single();
@@ -163,7 +163,7 @@ namespace adminModule.Bll.Impl
             serviceProvider.GetService<ISysRoleBll>()?.AddUserAndRole(sysUserDto.roleIds, sysUser.id);
         }
 
-        public void ModifyPassword(long userId, string? password, string newPassword)
+        public void UpdatePassword(long userId, string? password, string newPassword)
         {
             using var db = dbClientFactory.GetSqlSugarClient();
             SysUser sysUser = db.Queryable<SysUser>().Where(u => u.id == userId).Single();
