@@ -1,6 +1,7 @@
 ﻿using domain.Enums;
 using domain.Pojo.quartz;
 using domain.Result;
+using infrastructure.Attributes;
 using infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,8 @@ public class QuartzController : ControllerBase
         this._jobInfoBll = _jobInfoBll;
     }
     
+    [SysLog("添加执行计划")]
+    [RequiredPermission("monitor:quartz:add")]
     [HttpPost]
     public async Task<ApiResult> addJob([FromBody] JobInfo jobInfo)
     {
@@ -29,6 +32,8 @@ public class QuartzController : ControllerBase
         return ApiResult.succeed();
     }
     
+    [SysLog("修改执行计划状态")]
+    [RequiredPermission("monitor:quartz:state")]
     [HttpPost]
     public async Task<ApiResult> statusJob(long id, int status)
     {
@@ -43,6 +48,8 @@ public class QuartzController : ControllerBase
         return ApiResult.succeed();
     }
     
+    [SysLog("删除执行计划")]
+    [RequiredPermission("monitor:quartz:del")]
     [HttpPost]
     public async Task<ApiResult> delJob(List<long> ids)
     {
@@ -57,6 +64,14 @@ public class QuartzController : ControllerBase
         return ApiResult.succeed(pager);
     }
 
+    [SysLog("修改执行计划")]
+    [RequiredPermission("monitor:quartz:update")]
+    [HttpPut]
+    public async Task<ApiResult> update([FromBody] JobInfo jobInfo)
+    {
+        await _jobInfoBll.Update(jobInfo);
+        return ApiResult.succeed();
+    }
     
     
 }

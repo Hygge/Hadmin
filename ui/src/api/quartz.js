@@ -26,7 +26,13 @@ export function AddJob(data){
         data: data
     })
 }
-
+export function UpdateJob(data){
+    return request({
+        url: '/Quartz/update',
+        method: 'put',
+        data: data
+    })
+}
 export function StatusJob(data){
     return request({
         url: '/Quartz/statusJob',
@@ -35,3 +41,23 @@ export function StatusJob(data){
     })
 }
 
+export function GetListLog(data){
+    return request({
+        url: '/JobLog/list',
+        method: 'post',
+        params: data
+    })
+}
+export function DelLog(data){
+    return request({
+        url: '/JobLog/delLog',
+        method: 'post',
+        data: data
+    })
+}
+export function ClearLog(){
+    return request({
+        url: '/JobLog/delAll',
+        method: 'delete',
+    })
+}

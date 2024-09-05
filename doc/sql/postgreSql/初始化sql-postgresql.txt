@@ -1,3 +1,68 @@
+-- public.job_info definition
+
+-- Drop table
+
+-- DROP TABLE public.job_info;
+
+CREATE TABLE public.job_info (
+	id int8 NOT NULL,
+	job_name varchar(100) NOT NULL,
+	category varchar(100) NOT NULL,
+	assembly_name varchar(255) NOT NULL,
+	type_name varchar(255) NOT NULL,
+	job_key varchar(100) NOT NULL,
+	job_group varchar(100) NOT NULL,
+	cron_expression varchar(20) NOT NULL,
+	misfire_policy int4 NOT NULL,
+	concurrent bool NOT NULL,
+	status int4 NOT NULL,
+	seconds int4 NOT NULL,
+	repeat int4 NOT NULL,
+	CONSTRAINT job_info_pkey PRIMARY KEY (id)
+);
+
+
+-- public.job_log definition
+
+-- Drop table
+
+-- DROP TABLE public.job_log;
+
+CREATE TABLE public.job_log (
+	id int8 NOT NULL,
+	job_name varchar(100) NOT NULL,
+	category varchar(100) NOT NULL,
+	type_name varchar(255) NOT NULL,
+	job_message text NOT NULL,
+	exception_info text NOT NULL,
+	status bool NOT NULL,
+	start_time timestamp NOT NULL,
+	stop_time timestamp NOT NULL,
+	CONSTRAINT job_log_pkey PRIMARY KEY (id)
+);
+
+
+-- public.sys_log definition
+
+-- Drop table
+
+-- DROP TABLE public.sys_log;
+
+CREATE TABLE public.sys_log (
+	id int8 NOT NULL,
+	operation varchar(255) NOT NULL,
+	request_param text NOT NULL,
+	response_param text NOT NULL,
+	operator_name varchar(255) NOT NULL,
+	operate_time timestamp NOT NULL,
+	execute_time int8 NOT NULL,
+	execute_status bool NOT NULL,
+	reason text NOT NULL,
+	"path" varchar(255) NOT NULL,
+	CONSTRAINT sys_log_pk PRIMARY KEY (id)
+);
+
+
 -- public.sys_menu definition
 
 -- Drop table
@@ -24,6 +89,7 @@ CREATE TABLE public.sys_menu (
 	CONSTRAINT sys_menu_pkey PRIMARY KEY (id)
 );
 
+
 -- public.sys_role definition
 
 -- Drop table
@@ -40,6 +106,8 @@ CREATE TABLE public.sys_role (
 	remark varchar(255) NOT NULL,
 	CONSTRAINT sys_role_pkey PRIMARY KEY (id)
 );
+
+
 -- public.sys_role_and_menu definition
 
 -- Drop table
@@ -50,6 +118,7 @@ CREATE TABLE public.sys_role_and_menu (
 	menu_id int8 NOT NULL,
 	role_id int8 NOT NULL
 );
+
 
 -- public.sys_user definition
 
@@ -69,6 +138,8 @@ CREATE TABLE public.sys_user (
 	created_time timestamp NOT NULL,
 	CONSTRAINT sys_user_pkey PRIMARY KEY (id)
 );
+
+
 -- public.sys_user_and_role definition
 
 -- Drop table
@@ -78,65 +149,4 @@ CREATE TABLE public.sys_user (
 CREATE TABLE public.sys_user_and_role (
 	user_id int8 NOT NULL,
 	role_id int8 NOT NULL
-);
-
--- public.sys_log definition
-
--- Drop table
-
--- DROP TABLE public.sys_log;
-
-CREATE TABLE public.sys_log (
-	id int8 NOT NULL,
-	operation varchar(255) NOT NULL,
-	request_param varchar(255) NOT NULL,
-	response_param varchar(255) NOT NULL,
-	operator_name varchar(255) NOT NULL,
-	operate_time timestamp NOT NULL,
-	execute_time int8 NOT NULL,
-	execute_status bool NOT NULL,
-	reason varchar(255) NOT NULL,
-	"path" varchar(255) NOT NULL
-);
-
--- public.job_log definition
-
--- Drop table
-
--- DROP TABLE public.job_log;
-
-CREATE TABLE public.job_log (
-	id int8 NOT NULL,
-	job_name varchar(100) NOT NULL,
-	category varchar(100) NOT NULL,
-	type_name varchar(255) NOT NULL,
-	job_message text NOT NULL,
-	exception_info text NOT NULL,
-	status bool NOT NULL,
-	start_time timestamp NOT NULL,
-	stop_time timestamp NOT NULL,
-	CONSTRAINT job_log_pkey PRIMARY KEY (id)
-);
-
--- public.job_info definition
-
--- Drop table
-
--- DROP TABLE public.job_info;
-
-CREATE TABLE public.job_info (
-	id int8 NOT NULL,
-	job_name varchar(100) NOT NULL,
-	category varchar(100) NOT NULL,
-	assembly_name varchar(255) NOT NULL,
-	type_name varchar(255) NOT NULL,
-	job_key varchar(100) NOT NULL,
-	job_group varchar(100) NOT NULL,
-	cron_expression varchar(20) NOT NULL,
-	misfire_policy int4 NOT NULL,
-	concurrent bool NOT NULL,
-	status int4 NOT NULL,
-	seconds int4 NOT NULL,
-	repeat int4 NOT NULL,
-	CONSTRAINT job_info_pkey PRIMARY KEY (id)
 );

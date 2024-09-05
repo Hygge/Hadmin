@@ -2,7 +2,7 @@
 import {SearchOutlined, RedoOutlined, DeleteOutlined, FormOutlined, CaretRightOutlined, SlidersOutlined} from '@ant-design/icons-vue';
 import {reactive, ref, onMounted, toRaw,  } from 'vue';
 import {message} from "ant-design-vue";
-import {AddJob, DelJob, GetList, StatusJob} from "@/api/quartz.js";
+import {AddJob, DelJob, GetList, StatusJob, UpdateJob} from "@/api/quartz.js";
 import {useRouter} from "vue-router";
 
 
@@ -133,6 +133,7 @@ const delJob = () => {
   DelJob(data).then(res => {
     if (res.code === 200){
       message.success("删除成功")
+      search(null)
     }else {
       message.error(res.msg)
     }
@@ -150,6 +151,7 @@ const puseJob = (state) => {
     StatusJob(data).then(res => {
       if (res.code === 200){
         message.success("操作成功")
+        search(null)
       }else {
         message.error(res.msg)
       }
@@ -157,40 +159,80 @@ const puseJob = (state) => {
   })
 
 }
+const disable = ref(false)
+const title = ref('')
 // 新增
 const addJob = () => {
   open.value = true
+  title.value = '新增计划'
+  resetJob()
 }
 // 编辑
 const updateJob = () => {
+  if (selectRow.value.length === 0){
+    return;
+  }
   open.value = true
+  title.value = '修改计划'
+
+  job.jobName = selectRow.value[0].jobName
+  job.category = selectRow.value[0].category
+  job.assemblyName = selectRow.value[0].assemblyName
+  job.typeName = selectRow.value[0].typeName
+  job.jobKey = selectRow.value[0].jobKey
+  job.jobGroup = selectRow.value[0].jobGroup
+  job.cronExpression = selectRow.value[0].cronExpression
+  job.status = selectRow.value[0].status
+  job.concurrent = selectRow.value[0].concurrent
+  job.seconds = selectRow.value[0].seconds
+  job.repeat = selectRow.value[0].repeat
+  job.id = selectRow.value[0].id
+
+  disable.value = true
+
 }
 
 
 const open = ref(false);
-const showDrawer = () => {
-  open.value = true;
-};
+
 const onClose = () => {
   open.value = false;
+  disable.value = false;
 };
 
 const saveJob = () => {
 
   let data = toRaw(job)
-  data.concurrent = Boolean(job.concurrent)
-  data.status = Number  (job.status)
-  AddJob(toRaw(job)).then(res => {
-    if (res.code === 200){
-      message.success("保存成功")
-      resetJob()
-      onClose()
-      search(null)
-    }
-    else {
-      message.error(res.msg)
-    }
-  })
+/*  data.concurrent = job.concurrent === 'false' ? false : true;
+  data.status = Number(job.status)*/
+  if (!disable.value){
+    AddJob(data).then(res => {
+      if (res.code === 200){
+        message.success("保存成功")
+        resetJob()
+        onClose()
+        search(null)
+        disable.value = false
+      }
+      else {
+        message.error(res.msg)
+      }
+    })
+  }else {
+    UpdateJob(data).then(res => {
+      if (res.code === 200){
+        message.success("修改成功")
+        resetJob()
+        onClose()
+        search(null)
+        disable.value = false
+      }
+      else {
+        message.error(res.msg)
+      }
+    })
+  }
+
 
 }
 const optionsWithDisabled = [
@@ -219,8 +261,8 @@ const optionsWithDisabled = [
             style="width: 120px"
             v-model:value="query.status"
         >
-          <a-select-option value="0">正常</a-select-option>
-          <a-select-option value="1">暂停</a-select-option>
+          <a-select-option :value="0">正常</a-select-option>
+          <a-select-option :value="1">暂停</a-select-option>
         </a-select>
 
       </a-flex>
@@ -316,11 +358,11 @@ const optionsWithDisabled = [
       </a-flex>
       <a-flex gap="middle">
         <label class="from-label">jobKey&nbsp;&nbsp;&nbsp;</label>
-        <a-input class="label-right" v-model:value="job.jobKey" placeholder="请输入计划jobKey" />
+        <a-input class="label-right" v-model:value="job.jobKey" placeholder="请输入计划jobKey" :disabled="disable" />
       </a-flex>
       <a-flex gap="middle">
         <label class="from-label">jobGroup</label>
-        <a-input class="label-right" v-model:value="job.jobGroup" placeholder="请输入计划jobGroup" />
+        <a-input class="label-right" v-model:value="job.jobGroup" placeholder="请输入计划jobGroup"  :disabled="disable" />
       </a-flex>
 
       <a-flex gap="middle">
@@ -343,16 +385,16 @@ const optionsWithDisabled = [
             v-model:value="job.concurrent"
             class="label-right"
         >
-          <a-select-option value="true">并发</a-select-option>
-          <a-select-option value="false">串行</a-select-option>
+          <a-select-option :value="true">并发</a-select-option>
+          <a-select-option :value="false">串行</a-select-option>
         </a-select>
       </a-flex>
       <a-flex gap="middle">
         <label class="from-label">计划状态</label>
-        <a-radio-group   class="label-right" v-model:value="job.status" :options="optionsWithDisabled" optionType="button"
+        <a-radio-group   class="label-right" v-model:value="job.status" optionType="button"
                          button-style="solid" >
-<!--          <a-radio-button value="0">正常</a-radio-button>
-          <a-radio-button value="1">暂停</a-radio-button>-->
+          <a-radio-button :value="0">正常</a-radio-button>
+          <a-radio-button :value="1">暂停</a-radio-button>
         </a-radio-group>
       </a-flex>
 

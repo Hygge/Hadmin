@@ -269,7 +269,7 @@ public class JobInfoBll : IJobInfoBll
         }
         else
         {
-            throw new SchedulerException("Can't fin this Job.");
+            return;
         }
     }
 

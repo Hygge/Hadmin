@@ -8,13 +8,16 @@ onMounted(() =>{
   // 开启键盘监听事件
   // window.addEventListener('keydown', search, true)
 
+  menues.value = permissionStore.menus
+
 })
 
-const permissionStore = usePermissionStore()
 const value = ref('');
+const menues = ref([])
+const menues1 = ref([])
 
 watch(value, () => {
-  console.log(value.value);
+  console.log(value.value)
 });
 
 const selectedKeys = ref(['1']);
@@ -56,11 +59,42 @@ const onRouter = item =>{
 
 }
 
-const search = (e) => {
-  if (e.keyCode == 13 || e.keyCode == 100) {
+const findMenuItem = (menuList, key) => {
 
+  for (let i = 0; i < menuList.length; i++) {
+    let b = menuList[i].label.includes(key)
+    let b1 = findMenuItem2(menuList[i].children, key)
+    if (!b && b1){
+      menuList.splice(i, 1)
+      i--
+    }
   }
 
+}
+
+const findMenuItem2 = (menuList, key) => {
+  if (menuList === undefined || menuList.length === 0)
+    return true;
+  for (let i = 0; i < menuList.length; i++) {
+    let b = menuList[i].label.includes(key)
+    let b1 = findMenuItem2(menuList[i].children, key)
+    if (!b && b1){
+      menuList.splice(i, 1);
+      i--;
+    }
+  }
+  return menuList.length > 0 ? false : true;
+}
+const permissionStore = usePermissionStore()
+
+const search = () => {
+  permissionStore.initPermissions()
+  let data = permissionStore.menus
+  if (value.value !== '' ) {
+    findMenuItem(data, value.value)
+    menues.value = data
+  }
+  menues.value = data
 }
 
 onUnmounted(() => {
@@ -72,15 +106,14 @@ onUnmounted(() => {
 <template>
   <div class="sider-menu" >
     <div style="padding: 10px; ">
-      <a-input v-model:value="value" placeholder="请输入菜单名称" />
+      <a-input v-model:value="value" @keyup.enter="search" placeholder="请输入菜单名称" />
     </div>
 
     <a-menu
         theme="dark"
         v-model:selectedKeys="state.selectedKeys"
         mode="inline"
-
-        :items="permissionStore.menus"
+        :items="menues"
         @openChange="onOpenChange"
         @click="onRouter"
     ></a-menu>
