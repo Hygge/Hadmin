@@ -24,6 +24,10 @@ namespace domain.Result
         /// 未授权、未登录
         /// </summary>
         public readonly static int UNAUTHORIZED_CODE = 401;
+        /// <summary>
+        /// 未知错误
+        /// </summary>
+        public readonly static int FAILED_UNKNOWN_CODE = 500;
 
     }
 }

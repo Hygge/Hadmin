@@ -13,8 +13,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\adminModule\adminModule.csproj" />
+    <ProjectReference Include="..\dataPointsModule\dataPointsModule.csproj" />
     <ProjectReference Include="..\domain\domain.csproj" />
     <ProjectReference Include="..\infrastructure\infrastructure.csproj" />
+    <ProjectReference Include="..\otherSystemModule\otherSystemModule.csproj" />
     <ProjectReference Include="..\quartzModeule\quartzModeule.csproj" />
   </ItemGroup>
 

@@ -69,6 +69,20 @@ const logout = () =>{
   message.success('注销成功')
 }
 
+const color = ref(getRandomColor());
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function changeColor() {
+  color.value = getRandomColor();
+}
 </script>
 
 <template>
@@ -79,8 +93,11 @@ const logout = () =>{
       <FullscreenOutlined  style="font-size: 26px;" @click="cusFullScreen"/>
       <a-dropdown>
         <a class="ant-dropdown-link" @click.prevent>
-          {{ userStore.nickName }}
-          <UserOutlined />
+
+          <a-avatar size="large" :style="{ backgroundColor: color, verticalAlign: 'middle' }" :gap="4">
+            {{ userStore.nickName }}
+          </a-avatar>
+<!--         .split('')[0] <UserOutlined />-->
         </a>
         <template #overlay>
           <a-menu>

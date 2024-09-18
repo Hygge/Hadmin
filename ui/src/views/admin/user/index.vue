@@ -185,9 +185,9 @@ const handlePageChange = (page, pageSize) => {
   getTables(getCondition(data))
 }
 const confirm = (id) => {
-  console.log(id);
+  // console.log(id);
   RemoveUser(id).then(res => {
-    console.log(res)
+    // console.log(res)
     if (res.code === 200) {
       message.success('删除成功！');
       getTables()
@@ -195,8 +195,7 @@ const confirm = (id) => {
   })
 };
 const cancel = e => {
-  console.log(e);
-  message.info('取消操作');
+
 };
 
 
@@ -228,7 +227,7 @@ const resetForm = () => {
 };
 const showUpdate = ref(false)
 const showModal = (item) => {
-  console.log(item)
+
   currentUser.value = item
   showUpdate.value = true;
 }
@@ -241,7 +240,7 @@ const roles = ref([])
 const roleIds = ref([]);
 const options = ref([]);
 const popupScroll = () => {
-  console.log('popupScroll');
+  // console.log('popupScroll');
 };
 const handleOkSave = () => {
 
@@ -270,7 +269,7 @@ const onSubmit = () => {
 
 };
 const handleValidate = (...args) => {
-    console.log(args);
+    // console.log(args);
 };
 const rules = {
     userName: [
@@ -313,7 +312,7 @@ const modifyUser = ref({})
 const modifyShow = (item) => {
   showUser.value = true
   modifyUser.value = item
-  console.log(item)
+  // console.log(item)
 }
 const modifySave =  () => {
   let data= { id: modifyUser.value.id, userName: modifyUser.value.userName, nickName: modifyUser.value.nickName,

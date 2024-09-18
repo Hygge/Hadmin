@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quartzModeule", "quartzMode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dataPointsModule", "dataPointsModule\dataPointsModule.csproj", "{B3738F77-B30A-4729-9E09-5CCD320C0A4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "otherSystemModule", "otherSystemModule\otherSystemModule.csproj", "{30C9A09C-8BDD-4439-BD94-33ECF1332A3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B3738F77-B30A-4729-9E09-5CCD320C0A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3738F77-B30A-4729-9E09-5CCD320C0A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3738F77-B30A-4729-9E09-5CCD320C0A4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30C9A09C-8BDD-4439-BD94-33ECF1332A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C9A09C-8BDD-4439-BD94-33ECF1332A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C9A09C-8BDD-4439-BD94-33ECF1332A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C9A09C-8BDD-4439-BD94-33ECF1332A3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

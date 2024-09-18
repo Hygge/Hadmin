@@ -30,3 +30,28 @@ INSERT INTO public.sys_menu (id,parent_id,title,"type",icon,route,keep_alive,"ke
 	 (577685783937413,575129862402437,'修改用户',3,'','','','','','sys:user:update',1,1,0,'',99,'2024-08-09 19:09:30.364694'),
 	 (585500219978117,585074955129221,'调度日志',2,'ControlOutlined','/quartz/log','quartzLog','','/src/views/admin/quartz/logList.vue','monitor:quartz:Log:list',1,0,0,'',10,'2024-08-31 21:06:31.663643'),
 	 (587128431866245,585074955129221,'删除计划',3,'DollarCircleOutlined','','','','','monitor:quartz:del',1,0,0,'',10,'2024-09-05 11:31:44.331686');
+
+INSERT INTO public.sys_menu
+(id, parent_id, title, "type", icon, route, keep_alive, "key", "path", pem, "enable", "show", target, query, "order", created_time)
+VALUES(589689102934405, 589671762661765, '删除其他系统日志', 3, '', '', '', '', '', 'om:othersyslog:del', 1, 1, 0, '', 10, '2024-09-12 17:11:08.166');
+INSERT INTO public.sys_menu
+(id, parent_id, title, "type", icon, route, keep_alive, "key", "path", pem, "enable", "show", target, query, "order", created_time)
+VALUES(589339000910213, 0, '系统运维', 1, 'RobotOutlined', '', '', '', '', 'sys:om', 1, 1, 0, '', 10, '2024-09-11 17:26:34.039');
+INSERT INTO public.sys_menu
+(id, parent_id, title, "type", icon, route, keep_alive, "key", "path", pem, "enable", "show", target, query, "order", created_time)
+VALUES(589647154471301, 589574326399365, '新增其他系统', 3, '', '', '', '', '', 'om:othersys:add', 1, 1, 0, '', 10, '2024-09-12 14:20:26.842');
+INSERT INTO public.sys_menu
+(id, parent_id, title, "type", icon, route, keep_alive, "key", "path", pem, "enable", "show", target, query, "order", created_time)
+VALUES(589647330173318, 589574326399365, '删除其他系统', 3, '', '', '', '', '', 'om:othersys:del', 1, 1, 0, '', 10, '2024-09-12 14:21:09.738');
+INSERT INTO public.sys_menu
+(id, parent_id, title, "type", icon, route, keep_alive, "key", "path", pem, "enable", "show", target, query, "order", created_time)
+VALUES(589647456719238, 589574326399365, '删除其他系统', 3, '', '', '', '', '', 'om:othersys:update', 1, 1, 0, '', 1, '2024-09-12 14:21:40.633');
+INSERT INTO public.sys_menu
+(id, parent_id, title, "type", icon, route, keep_alive, "key", "path", pem, "enable", "show", target, query, "order", created_time)
+VALUES(589647658971526, 589574326399365, '刷新密钥', 3, '', '', '', '', '', 'om:othersys:buildappkey', 1, 1, 0, '', 10, '2024-09-12 14:22:30.011');
+INSERT INTO public.sys_menu
+(id, parent_id, title, "type", icon, route, keep_alive, "key", "path", pem, "enable", "show", target, query, "order", created_time)
+VALUES(589574326399365, 589339000910213, '其他系统管理', 2, 'ClusterOutlined', '/om/othersys/list', 'otherSysInfo', '', '/src/views/sysom/othersys/sysinfo/index.vue', 'om:othersys:list', 1, 1, 0, '', 10, '2024-09-12 09:24:06.551');
+INSERT INTO public.sys_menu
+(id, parent_id, title, "type", icon, route, keep_alive, "key", "path", pem, "enable", "show", target, query, "order", created_time)
+VALUES(589671762661765, 589339000910213, '其他系统日志', 2, 'HistoryOutlined', '/sysom/othersyslog/list', 'othersyslog', '', '/src/views/sysom/othersys/log/index.vue', 'om:othersyslog:list', 1, 1, 0, '', 3, '2024-09-12 16:00:34.701');

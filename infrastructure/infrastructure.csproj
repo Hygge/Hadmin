@@ -29,7 +29,7 @@
 
 
 	<ItemGroup>
-	  <None Update="log4Net.config">
+	  <None Update="log4net.config">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

@@ -6,7 +6,7 @@ export function createPageTitleGuard(router) {
         const pageTitle = to.meta?.title
         if (pageTitle) {
             // document.title = `${pageTitle} | ${baseTitle}`
-            document.title = `${pageTitle} | HAdmin`
+            document.title = `${pageTitle} | Hadmin`
         } else {
             document.title = baseTitle
         }

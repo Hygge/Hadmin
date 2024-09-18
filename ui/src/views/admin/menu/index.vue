@@ -48,21 +48,21 @@ const columns = [
   {
     title: '菜单名称',
     dataIndex: 'title',
-    width: '10%',
+    width: 150,
     key: 'title',
   },
   {
     title: '图标',
     dataIndex: 'icon',
     key: 'icon',
-    width: '9%',
+    width: 150,
 
   },
   {
     title: '排序',
     dataIndex: 'order',
     key: 'order',
-    width: '5%',
+    width: 150,
   },
   {
     title: '权限标识符',
@@ -74,25 +74,26 @@ const columns = [
     title: '组件路径',
     dataIndex: 'path',
     key: 'path',
-    width: '13%',
+    width: 150,
   },
   {
     title: '状态',
     dataIndex: 'enable',
     key: 'enable',
-    width: '7%',
+    width: 150,
   },
   {
     title: '创建时间',
     dataIndex: 'createdTime',
     key: 'createdTime',
-    width: '10%',
+    width: 150,
   },
   {
     title: '操作',
     dataIndex: 'operation',
     key: 'operation',
-    width: '14%',
+    width: 150,
+    align:'center',  fixed: 'right',
   },
 
 ];
@@ -174,7 +175,7 @@ const saveMenu = () =>{
   data.icon = currentMenu.value.icon || ''
   data.order = currentMenu.value.order || undefined
   data.pem = currentMenu.value.pem
-  data.show = currentMenu.value.show  || 0
+  data.show = currentMenu.value.show  || 1
   data.target = currentMenu.value.target  || 0
   data.enable = currentMenu.value.enable
   data.type = type.value
@@ -339,20 +340,22 @@ const saveMenu = () =>{
               <a-radio :value="0" >否</a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item  label="显示状态" >
-            <a-radio-group v-model:value="currentMenu.show" name="show">
-              <a-radio :value="1" >显示</a-radio>
-              <a-radio :value="0" >隐藏</a-radio>
-            </a-radio-group>
-          </a-form-item>
-        </a-flex>
 
+        </a-flex>
+        <a-flex :gap="20">
         <a-form-item  label="菜单状态" >
           <a-radio-group v-model:value="currentMenu.enable" name="enable">
             <a-radio :value="1" >正常</a-radio>
             <a-radio :value="0" >停用</a-radio>
           </a-radio-group>
         </a-form-item>
+        <a-form-item  label="显示状态" >
+          <a-radio-group v-model:value="currentMenu.show" name="show">
+            <a-radio :value="1" >显示</a-radio>
+            <a-radio :value="0" >隐藏</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        </a-flex>
 
         <a-flex :gap="10" v-if="menu">
       <a-form-item :name="['route']" label="路由地址" >

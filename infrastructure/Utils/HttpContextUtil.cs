@@ -74,7 +74,14 @@ namespace infrastructure.Utils
             
             return dictionary.Count > 0? JsonConvert.SerializeObject(dictionary) : string.Empty;
         }
-        
+
+
+        public static string getRequestIp(HttpContext context)
+        {
+            // https://blog.csdn.net/qq_34897745/article/details/106093714
+            //return context.Request.Headers["X-Real-IP"].FirstOrDefault();
+            return context.Connection.RemoteIpAddress.ToString();
+        }
         
 
     }

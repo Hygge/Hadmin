@@ -150,3 +150,42 @@ CREATE TABLE public.sys_user_and_role (
 	user_id int8 NOT NULL,
 	role_id int8 NOT NULL
 );
+
+-- public.other_sys_info definition
+
+-- Drop table
+
+-- DROP TABLE public.other_sys_info;
+
+CREATE TABLE public.other_sys_info (
+	id int8 NOT NULL,
+	"name" varchar(255) NOT NULL,
+	app_key varchar(255) NOT NULL,
+	state int4 NOT NULL,
+	created_time timestamp NOT NULL,
+	CONSTRAINT other_sys_info_pk PRIMARY KEY (id)
+);
+
+
+-- public.other_sys_log definition
+
+-- Drop table
+
+-- DROP TABLE public.other_sys_log;
+
+CREATE TABLE public.other_sys_log (
+	id int8 NOT NULL,
+	sys_name varchar(255) NOT NULL,
+	sys_target_name varchar(255) NOT NULL,
+	ip varchar(255) NOT NULL,
+	operation varchar(255) NOT NULL,
+	request_param varchar(255) NOT NULL,
+	response_param varchar(255) NOT NULL,
+	operator_name varchar(255) NOT NULL,
+	operate_time timestamp NOT NULL,
+	execute_time int8 NOT NULL,
+	execute_status bool NOT NULL,
+	reason varchar(255) NOT NULL,
+	"path" varchar(255) NOT NULL,
+	CONSTRAINT other_sys_log_pkey PRIMARY KEY (id)
+);

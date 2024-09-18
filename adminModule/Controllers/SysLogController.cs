@@ -1,11 +1,13 @@
 ﻿using adminModule.Bll;
 using domain.Result;
 using infrastructure.Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace adminModule.Controllers;
 
+[Authorize]
 [Route("[controller]/[action]")]
 [ApiController]
 public class SysLogController : ControllerBase

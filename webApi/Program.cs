@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
+using domain.Pojo.ortherSystems;
 using domain.Pojo.quartz;
 using infrastructure.Utils;
+using otherSystemModule;
 using quartzModeule;
 using quartzModeule.Bll;
 using webApi.Authorizations;
@@ -77,6 +79,8 @@ builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, CustomizeAu
 
 builder.Services.AddQuartzModule();
 
+builder.Services.AddOtherSystemModule();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -96,6 +100,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseMiddleware<SysLogMiddleware>();
+app.UseMiddleware<OtherSystemsMiddleware>();
 app.UseEndpoints(e => e.MapControllers());
 
 
@@ -110,7 +115,8 @@ if (tables == null || tables.Count == 0 )
     // 执行初始化sql
     db.CodeFirst.InitTables(typeof(SysUser), typeof(SysRole), typeof(SysRoleAndMenu), typeof(SysUserAndRole), typeof(SysMenu));
     db.CodeFirst.InitTables<SysLog>();  db.CodeFirst.InitTables<JobInfo>();
-  db.CodeFirst.InitTables<JobLog>();    
+  db.CodeFirst.InitTables<JobLog>();    db.CodeFirst.InitTables<OtherSysLog>();
+  db.CodeFirst.InitTables<OtherSysInfo>();
     
 }
 

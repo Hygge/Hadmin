@@ -36,17 +36,16 @@
 
       </a-layout-content>
       <a-layout-footer :style="{ textAlign: 'center' }">
-        Ant Design ©2024 Created by Hygge
+        Ant Design ©2024 Created by Hyyge
       </a-layout-footer>
     </a-layout>
   </a-layout>
 
 </template>
 <script setup>
-import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined, FullscreenOutlined} from '@ant-design/icons-vue';
+import { MenuUnfoldOutlined, MenuFoldOutlined,} from '@ant-design/icons-vue';
 import { ref, onMounted } from 'vue';
 import NavMenu from "@/layout/NavMenu.vue";
-import {message} from "ant-design-vue";
 import Tabs from "@/layout/Tabs.vue";
 import {useTabStore} from "@/store/index.js";
 import Head from "@/layout/Head.vue";

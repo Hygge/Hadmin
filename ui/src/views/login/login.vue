@@ -65,7 +65,7 @@ const bgm = ref('../../assets/screenshot.png')
 
         <a-flex :vertical="true" style="margin-bottom: 40px;" justify="center" align="center" >
           <a-image width="50%" :src="logo" :preview="false" mode="aspectFill" />
-          <span style="font-weight: bold;font-size: 20px;margin: 20px;">ant-design-vue+vue3 开发</span>
+          <span style="font-weight: bold;font-size: 20px;margin: 20px;">Hadmin</span>
         </a-flex>
         <a-flex :vertical="true" gap="middle">
         <a-form-item

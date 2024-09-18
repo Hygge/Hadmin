@@ -1,4 +1,5 @@
-﻿using infrastructure.Attributes;
+﻿using System.Text;
+using infrastructure.Attributes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,7 +26,6 @@ namespace infrastructure.Db
             var db = new SqlSugarClient(new ConnectionConfig()
             {
                 DbType = DbType.PostgreSQL,
-           //     ConnectionString = "PORT=5432;DATABASE=Hadmin;Server=localhost;PASSWORD=123456;USER ID=hygge;",
                 ConnectionString = ConnectionStringSettings,
                 IsAutoCloseConnection = true,
                 ConfigureExternalServices = new ConfigureExternalServices()
@@ -44,6 +44,12 @@ namespace infrastructure.Db
             });
             db.Aop.OnLogExecuting = (sql, pars) =>
             {
+                StringBuilder sb = new();
+                foreach (var sugarParameter in pars)
+                {
+                    sb.Append(JsonConvert.SerializeObject(sugarParameter));
+                    sb.Append(" , ");
+                }
                 Console.WriteLine($"正在执行sql：{sql} \t，参数：{JsonConvert.SerializeObject(pars)}");
 
             };

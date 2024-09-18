@@ -35,7 +35,6 @@ export function setupInterceptors(axiosInstance) {
             const msg = resolveResError(code, data?.message ?? statusText)
             console.log(msg)
             //需要错误提醒
-            // !config.noNeedTip && window.$message?.error(message)
             message.error(msg)
             return Promise.reject({ code, msg, error: data ?? response })
         }
@@ -58,7 +57,7 @@ export function setupInterceptors(axiosInstance) {
 
         const msg = resolveResError(code, data?.message ?? error.message)
         /** 需要错误提醒 */
-        // !config?.noNeedTip && message && window.$message?.error(message)
+        message.error(msg)
         return Promise.reject({ code, msg, error: error.response?.data || error.response })
     }
 

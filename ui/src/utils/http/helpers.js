@@ -51,6 +51,9 @@ export function resolveResError(code, msg) {
         },
       })
       return false
+    case 400:
+      msg = '请求参数异常，请填写完整数据'
+      break
     case 403:
       msg = '请求被拒绝'
       break

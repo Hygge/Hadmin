@@ -3,12 +3,14 @@ using domain.Pojo.quartz;
 using domain.Result;
 using infrastructure.Attributes;
 using infrastructure.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using quartzModeule.Bll;
 
 namespace quartzModeule.Controller;
 
+[Authorize]
 [Route("[controller]/[action]")]
 [ApiController]
 public class QuartzController : ControllerBase
