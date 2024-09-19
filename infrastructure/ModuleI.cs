@@ -37,7 +37,7 @@ namespace infrastructure
             {
                 log.AddConsole();
                 log.AddDebug();
-                log.AddLog4Net();
+                log.AddLog4Net("log4net.config");
             });
 
             // Add services to the container.

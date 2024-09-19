@@ -93,6 +93,9 @@ public class OtherSysInfoBll : IOtherSysInfoBll
        {
            throw new BusinessException("该系统不存在更新失败");
        }
+
+       o.name = otherSysInfo.name;
+       o.state = otherSysInfo.state;
         db.Updateable(otherSysInfo).ExecuteCommand();
         
     }
